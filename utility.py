@@ -1,5 +1,9 @@
+import sys
+
 import numpy as np
+
 from typing import List, Tuple, Generic, TypeVar, MutableSequence
+import warnings
 
 T = TypeVar('T')
 
@@ -99,12 +103,39 @@ class UndirectedGraphNode:
         return self.undirected_nodes == other.undirected_nodes
 
 
+class MatrixGraph:
+    # numpy matrix to represent the graph
+    matrix: np.array([0])
+    matrix_size: int = 0
+
+    def __init__(self, matrix_size: int):
+        # when initialized, we create a 2 dimensional array of size matrix_size
+        # hence it is of matrix_size x matrix_size filled with 0s
+        # creating an array of arrays all of the same size to get 2-dimensional array
+        self.matrix = np.array([[sys.maxsize] * matrix_size] * matrix_size)
+        self.matrix_size = matrix_size
+
+    def get(self, _from: int, _to: int) -> int:
+        # get value from matrix
+        # _from selects the array
+        # _to selects the position in the array
+        if (_from < self.matrix_size and _to < self.matrix_size):
+            return self.matrix[_from][_to]
+        raise UserWarning("Indices out of bounds")
+
+    def put(self, _from: int, _to: int, value: int):
+        if (_from < self.matrix_size and _to < self.matrix_size):
+            self.matrix[_from][_to] = value
+            return
+        raise UserWarning("Indices out of bounds")
+
+
 def depth_first_search(node: UndirectedNode, count: int = 0):
     node.mark_node()
     node.set_order(count)
     for i in node.get_connections():
         if not i.is_marked():
-            count+=1
+            count += 1
             depth_first_search(i, count)
 
 
@@ -143,6 +174,7 @@ def points_generator(length: int = 100) -> List[Point]:
     for i in range(0, length):
         points.append(Point(x_val[i], y_val[i]))
     return points
+
 
 """
 Function to generate an UndirectedGraphNode objected with each nodes _connections initialized
