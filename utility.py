@@ -118,13 +118,18 @@ class MatrixGraph:
     def get(self, _from: int, _to: int) -> int:
         # get value from matrix
         # _from selects the array
-        # _to selects the position in the array
+        # _to selects the position of value in the array
         if (_from < self.matrix_size and _to < self.matrix_size):
+            # check to see the _from and _to are valid for array size
             return self.matrix[_from][_to]
         raise UserWarning("Indices out of bounds")
 
     def put(self, _from: int, _to: int, value: int):
+        # put value 'value' into matrix
+        # _from selects the array
+        # _to selects the position in the array
         if (_from < self.matrix_size and _to < self.matrix_size):
+            # check to see the _from and _to are valid for array size
             self.matrix[_from][_to] = value
             return
         raise UserWarning("Indices out of bounds")

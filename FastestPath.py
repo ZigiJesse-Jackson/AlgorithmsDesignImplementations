@@ -66,6 +66,8 @@ returns: a list containing a matrix graph from file content, a dict of speed lim
             from file content, and the destination city (an integer)
 
 """
+
+
 def find_shortest_paths(graph: MatrixGraph, speed_limits: dict, dest: int):
     # Initialization phase
     # contains set of cities with least cost already computed
@@ -126,6 +128,7 @@ def find_shortest_paths(graph: MatrixGraph, speed_limits: dict, dest: int):
     path_to_dest.append(int(dest))
     return path_to_dest
 
+
 """
 Function to get neighbours of a vertex in MatrixGraph in utility.py
 
@@ -138,12 +141,16 @@ returns: a list containing the neighbours of vertex src
 
 """
 
+
 def get_neighbours(src: int, graph: MatrixGraph):
+    if src > graph.matrix_size:
+        raise UserWarning("vertex out of bounds")
     neighbours = []
     for dest in range(graph.matrix_size):
         if graph.get(src, dest) != sys.maxsize:
             neighbours.append(dest)
     return neighbours
+
 
 """
 Function to get key with minimum value in a set
@@ -156,6 +163,7 @@ args:
 returns: key with the minimum value in tree_set
 
 """
+
 
 def get_min_not_in_set(costs: dict, tree_set: set):
     min = sys.maxsize
